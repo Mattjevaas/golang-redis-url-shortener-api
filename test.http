@@ -1,0 +1,12 @@
+### Create Short URL
+POST http://localhost:8080/save
+Accept: application/json
+Content-Type: application/json
+
+{
+  "original_url" : "www.google.co.id"
+}
+
+### Retrieve Original URL
+GET http://localhost:8080/retrieve/KwHbZCci
+Accept: application/json
