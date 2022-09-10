@@ -2,6 +2,7 @@ package exception
 
 import (
 	"URLShortener/exception/custom_error"
+	"URLShortener/helper"
 	"URLShortener/model/web"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -20,16 +21,18 @@ func ErrorHandler(c *gin.Context, recovered interface{}) {
 }
 
 func linkNotFoundError(c *gin.Context, recovered interface{}) bool {
-	recover, ok := recovered.(custom_error.LinkNotFoundError)
+	_, ok := recovered.(custom_error.LinkNotFoundError)
 
 	if ok {
-		webRes := web.WebResponse{
-			Code:   http.StatusNotFound,
-			Status: "The Page you search is not found",
-			Data:   recover.Error,
-		}
-
-		c.JSON(http.StatusNotFound, webRes)
+		//webRes := web.WebResponse{
+		//	Code:   http.StatusNotFound,
+		//	Status: "The Page you search is not found",
+		//	Data:   recover.Error,
+		//}
+		//
+		//c.JSON(http.StatusNotFound, webRes)
+		clientPath := helper.Getenv("CLIENT_PATH", "https://johaneswiku.com/urlshort")
+		c.Redirect(http.StatusMovedPermanently, clientPath)
 		return true
 	}
 
