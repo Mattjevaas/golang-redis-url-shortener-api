@@ -1,6 +1,7 @@
 package store_repository
 
 import (
+	"URLShortener/exception/custom_error"
 	"URLShortener/helper"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
@@ -25,7 +26,10 @@ func (s *StoreRepositoryImpl) SaveURLMapping(c *gin.Context, redis *redis.Client
 
 func (s *StoreRepositoryImpl) RetrieveInitialURL(c *gin.Context, redis *redis.Client, shortUrl string) string {
 	result, redisErr := redis.Get(c, shortUrl).Result()
-	helper.PanicIfError(redisErr)
+
+	if redisErr != nil {
+		panic(custom_error.NewLinkNotFound(redisErr.Error()))
+	}
 
 	return result
 }

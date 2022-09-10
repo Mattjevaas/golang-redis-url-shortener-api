@@ -7,4 +7,5 @@ import (
 type StoreContoller interface {
 	SaveURLMapping(c *gin.Context)
 	RetrieveInitialURL(c *gin.Context)
+	RedirectURL(c *gin.Context)
 }

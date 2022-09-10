@@ -12,6 +12,7 @@ import (
 	"URLShortener/repository/store_repository"
 	"URLShortener/service/store_service"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 // Injectors from injector.go:
@@ -19,7 +20,8 @@ import (
 func InitializeServer() *gin.Engine {
 	client := app.NewRedisClient()
 	storeRepository := store_repository.NewStoreRepository()
-	storeService := store_service.NewStoreService(storeRepository)
+	validate := validator.New()
+	storeService := store_service.NewStoreService(storeRepository, validate)
 	storeContoller := store_controller.NewStoreController(storeService)
 	engine := app.NewRouter(client, storeContoller)
 	return engine

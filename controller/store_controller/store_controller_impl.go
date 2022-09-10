@@ -50,3 +50,13 @@ func (s *StoreControllerImpl) RetrieveInitialURL(c *gin.Context) {
 
 	c.JSON(http.StatusOK, webRes)
 }
+
+func (s *StoreControllerImpl) RedirectURL(c *gin.Context) {
+	param := c.Param("shortUrl")
+	//if param == "" {
+	//	panic("ShortURL Cannot be Empty")
+	//}
+
+	oriUrl := s.StoreService.RetrieveInitialURL(c, param)
+	c.Redirect(http.StatusMovedPermanently, oriUrl)
+}
