@@ -5,18 +5,20 @@ import (
 )
 
 func NewRedisClient() *redis.Client {
-	redisOpt := &redis.Options{
-		Network:  "unix",
-		Addr:     "/home/johanes3/redis.sock",
-		Password: "",
-		DB:       1,
-	}
 
+	//For connecting using unix socket
 	//redisOpt := &redis.Options{
-	//	Addr:     "localhost:6379",
+	//	Network:  "unix",
+	//	Addr:     helper.Getenv("SOCKET", ""),
 	//	Password: "",
-	//	DB:       0,
+	//	DB:       1,
 	//}
+
+	redisOpt := &redis.Options{
+		Addr:     "localhost:6379",
+		Password: "",
+		DB:       0,
+	}
 
 	redisClient := redis.NewClient(redisOpt)
 	return redisClient
