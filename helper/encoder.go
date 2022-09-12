@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/itchyny/base58-go"
 	"math/big"
-	"os"
 	"time"
 )
 
@@ -18,10 +17,8 @@ func sha256Of(input string) []byte {
 func base58Encoded(bytes []byte) string {
 	encoding := base58.BitcoinEncoding
 	encoded, err := encoding.Encode(bytes)
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-	}
+	PanicIfError(err)
+
 	return string(encoded)
 }
 
